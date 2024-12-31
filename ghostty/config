@@ -1,7 +1,9 @@
 shell-integration-features = no-cursor
+adjust-cursor-thickness=3
 cursor-style-blink = false
 cursor-style = block
 font-family = Fira Code
 font-thicken = true
-font-size = 14.0
-theme = Dracula Pro (Morbius).conf
+font-size = 16.0
+theme = Dracula Pro.conf
+adjust-cell-height=20%
