@@ -177,3 +177,6 @@ source <(fzf --zsh)
 if [[ -o interactive ]]; then
     fastfetch
 fi
+
+# Use the legacy eslint config file format.
+ESLINT_USE_FLAT_CONFIG=false
