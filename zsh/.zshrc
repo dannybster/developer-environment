@@ -114,6 +114,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set up fzf key bindings and fuzzy completion
+export FZF_DEFAULT_OPTS='--bind=ctrl-p:up,ctrl-n:down,ctrl-y:accept'
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
@@ -190,3 +191,8 @@ fi
 
 # Use the legacy eslint config file format.
 ESLINT_USE_FLAT_CONFIG=false
+
+bindkey '^y' autosuggest-accept
+bindkey "^p" up-line-or-search
+bindkey "^n" down-line-or-search
+
