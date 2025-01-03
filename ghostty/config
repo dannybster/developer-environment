@@ -7,3 +7,7 @@ font-thicken = true
 font-size = 16.0
 theme = Dracula Pro.conf
 adjust-cell-height=20%
+keybind=clear
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+macos-option-as-alt = true
