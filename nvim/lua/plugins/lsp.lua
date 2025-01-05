@@ -13,6 +13,11 @@ return {
           },
         },
       },
+      eslint = {
+        experimental = {
+          useFlatConfig = false,
+        },
+      },
     },
     inlay_hints = {
       enabled = false,
