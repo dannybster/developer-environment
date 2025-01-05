@@ -113,6 +113,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export EDITOR=nvim
+
 # Set up fzf key bindings and fuzzy completion
 export FZF_DEFAULT_OPTS='--bind=ctrl-p:up,ctrl-n:down,ctrl-y:accept'
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
@@ -192,7 +194,11 @@ fi
 # Use the legacy eslint config file format.
 ESLINT_USE_FLAT_CONFIG=false
 
+# Add some Vim like keybindings to the terminal.
 bindkey '^y' autosuggest-accept
 bindkey "^p" up-line-or-search
 bindkey "^n" down-line-or-search
 
+# Tmuxifier Setup
+export PATH="$HOME/.config/tmuxifier/bin:$PATH"
+eval "$(tmuxifier init -)"
