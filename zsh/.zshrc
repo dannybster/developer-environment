@@ -7,6 +7,9 @@
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+# if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+#     export TERM=xterm-256color
+# fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
