@@ -12,7 +12,7 @@ if initialize_session "wulf"; then
   split_h 50
 
   select_pane 0
-  run_cmd "npm run start:cypress"
+  run_cmd "npm run start:neoma:cypress"
 
   select_pane 1
   run_cmd "npm run cypress"
@@ -22,10 +22,10 @@ if initialize_session "wulf"; then
   split_h 50
 
   select_pane 0
-  run_cmd "npm run test:e2e -- --watch"
+  run_cmd "npm run test:neoma:e2e -- --watch"
 
   select_pane 1
-  run_cmd "npm run test -- --watch"
+  run_cmd "npm run test:neoma -- --watch"
 
   # Create a window contains the IDE.
   new_window "ide"
