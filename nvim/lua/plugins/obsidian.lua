@@ -29,15 +29,15 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/Dropbox/obsidian/vaults/personal",
+        path = "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Obsidian/personal",
       },
       {
         name = "wulfstack",
-        path = "~/Dropbox/obsidian/vaults/wulfstack",
+        path = "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Obsidian/wulfstack",
       },
       {
         name = "apg",
-        path = "~/Dropbox/obsidian/vaults/apg",
+        path = "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Obsidian/apg",
       },
     },
 
