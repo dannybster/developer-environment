@@ -11,20 +11,20 @@ if initialize_session "wulf"; then
   new_window "server/cypress"
   split_h 50
 
-  select_pane 0
+  select_pane 1
   run_cmd "npm run start:neoma:cypress"
 
-  select_pane 1
+  select_pane 2
   run_cmd "npm run cypress"
 
   # Create a window that runs the tests.
   new_window "tests"
   split_h 50
 
-  select_pane 0
+  select_pane 1
   run_cmd "npm run test:neoma:e2e -- --watch"
 
-  select_pane 1
+  select_pane 2
   run_cmd "npm run test:neoma -- --watch"
 
   # Create a window contains the IDE.

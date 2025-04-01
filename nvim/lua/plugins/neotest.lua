@@ -28,12 +28,12 @@ return {
     opts = {
       adapters = {
         ["neotest-jest"] = {
-          jestCommand = "npm run test:neoma --",
-          env = { CI = true },
-          jest_test_discovery = false,
-          discovery = {
-            enabled = false,
-          },
+          jestCommand = function(file)
+            if string.find(file, "e2e-spec", 1, true) then
+              return "npm run test:neoma:e2e --"
+            end
+            return "npm run test:neoma --"
+          end,
           cwd = function()
             return vim.fn.getcwd()
           end,
