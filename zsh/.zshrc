@@ -5,6 +5,8 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
@@ -172,6 +174,9 @@ export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin":$PATH
 # Add Sublime. 
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 
+# Mise version manager.
+eval "$(~/.local/bin/mise activate zsh)"
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(zoxide init zsh)"
 source <(fzf --zsh)
@@ -205,3 +210,4 @@ bindkey "^n" down-line-or-search
 # Tmuxifier Setup
 export PATH="$HOME/.config/tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
