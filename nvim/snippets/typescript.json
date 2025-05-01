@@ -1,0 +1,7 @@
+{
+  "TS Import": {
+    "prefix": "im",
+    "body": ["import { ${1:module} } from \"${2:path}\""],
+    "description": "Import a module in TypeScript"
+  }
+}
