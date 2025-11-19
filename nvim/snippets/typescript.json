@@ -1,7 +1,19 @@
 {
-  "TS Import": {
-    "prefix": "im",
-    "body": ["import { ${1:module} } from \"${2:path}\""],
+  "Import": {
+    "prefix": "imp",
+    "body": ["import { ${1:module} } from \"${2:path}\"$0"],
     "description": "Import a module in TypeScript"
+  },
+  "Import Test Dependencies": {
+    "prefix": "imt",
+    "body": ["import { Test, TestingModule } from \"@nestjs/testing\""],
+    "description": "Import the Test and TestingModule from NestJS for testing"
+  },
+  "Before Each Spec": {
+    "prefix": "beforeEachSpec",
+    "body": [
+      "beforeEach(async () => {\n\tconst module: TestingModule = await Test.createTestingModule({\n\t\tproviders: [${1:Provider1}],\n\t}).compile()\n\n\t${2:sut} = module.get(${3:Provider3})\n})$0"
+    ],
+    "description": "Setup code to run before each test in a spec file"
   }
 }
