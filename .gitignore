@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+
+# ZSH state (not config)
+zsh/.zsh_history
+zsh/.zsh_sessions/
+zsh/.zcompdump*
+
+# Secrets/tokens
+github-copilot/
+configstore/
+
+# PHP REPL state
+psysh/
