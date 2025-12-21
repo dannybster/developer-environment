@@ -38,8 +38,39 @@ LazyVim distribution with extras for:
 
 ## Installation
 
+### Fresh machine
+
 ```bash
-git clone <repo> ~/.config
+# Clone the repo
+git clone git@github.com:dannybster/developer-environment.git ~/.config
+
+# Install all dependencies via Homebrew
+brew bundle --file=~/.config/brew/Brewfile
+
+# Open nvim and sync plugins
+nvim
+# Run :Lazy sync
 ```
 
-Then open nvim and run `:Lazy sync`.
+### Syncing to existing machine
+
+```bash
+cd ~/.config
+git pull
+
+# Install any new brew dependencies
+brew bundle --file=brew/Brewfile
+
+# Upgrade neovim if needed (requires 0.11+)
+brew upgrade neovim
+
+# Sync nvim plugins
+nvim
+# Run :Lazy sync
+```
+
+### Post-install
+
+- **Copilot**: Run `:Copilot auth` to authenticate
+- **Obsidian**: Workspaces expect iCloud paths - update `nvim/lua/plugins/obsidian.lua` if needed
+- **Ghostty**: May need to set as default terminal
