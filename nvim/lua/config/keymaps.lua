@@ -54,3 +54,6 @@ vim.keymap.set("n", "<leader>fpn", function()
   vim.fn.setreg("+", name)
   vim.notify("Copied: " .. name)
 end, { desc = "Copy file name" })
+
+-- Cheatsheet
+vim.keymap.set("n", "<leader>fk", "<cmd>vsplit ~/.config/nvim/focus.md<cr>", { desc = "Vim motion cheatsheet" })
