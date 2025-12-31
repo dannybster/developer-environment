@@ -35,3 +35,22 @@ set_keymap(
   "<cmd>lua require('package-info').change_version()<cr>",
   { silent = true, noremap = true, desc = "Change package version" }
 )
+
+-- File path copy keymaps
+vim.keymap.set("n", "<leader>fpa", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied: " .. path)
+end, { desc = "Copy absolute path" })
+
+vim.keymap.set("n", "<leader>fpr", function()
+  local path = vim.fn.expand("%")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied: " .. path)
+end, { desc = "Copy relative path" })
+
+vim.keymap.set("n", "<leader>fpn", function()
+  local name = vim.fn.expand("%:t")
+  vim.fn.setreg("+", name)
+  vim.notify("Copied: " .. name)
+end, { desc = "Copy file name" })

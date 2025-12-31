@@ -1,5 +1,5 @@
 return {
   "stevearc/oil.nvim",
   opts = {},
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  dependencies = { { "nvim-mini/mini.icons", opts = {} } },
 }
