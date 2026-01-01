@@ -13,6 +13,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 #     export TERM=xterm-256color
 # fi
 
+# Custom completions
+fpath=(~/.config/zsh/completions $fpath)
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -85,12 +88,22 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=5"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
+	zsh-completions
+	fzf-tab
 	zsh-autosuggestions
 	zsh-syntax-highlighting
 	direnv
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Tool completions loaded via fpath (~/.config/zsh/completions)
+# npm uses bash-style completion, needs eval
+command -v npm &>/dev/null && eval "$(npm completion)"
+
+# fzf-tab config
+zstyle ':fzf-tab:*' fzf-flags --multi
+zstyle ':fzf-tab:*' fzf-bindings 'tab:toggle+down' 'shift-tab:toggle+up'
 
 # User configuration
 
@@ -161,7 +174,9 @@ _fzf_comprun() {
 
 # Aliases
 alias cd="z"
-alias ls="eza --icons=always"
+alias ls="eza --icons=always --group-directories-first"
+alias ll="eza -la --icons=always --git --group-directories-first"
+alias lt="eza --tree --icons=always -L 2"
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
