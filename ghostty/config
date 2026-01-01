@@ -12,3 +12,4 @@ adjust-cell-height=20%
 macos-option-as-alt = true
 keybind = alt+left=unbind
 keybind = alt+right=unbind
+keybind = opt+3=text:#
