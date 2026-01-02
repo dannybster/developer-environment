@@ -105,7 +105,7 @@ command -v npm &>/dev/null && eval "$(npm completion)"
 zstyle ':fzf-tab:*' fzf-flags --multi --ansi
 zstyle ':fzf-tab:*' fzf-bindings 'tab:toggle+down' 'shift-tab:toggle+up'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:*:*' fzf-preview 'eza --icons --color=always $realpath 2>/dev/null || echo $realpath'
+zstyle ':fzf-tab:complete:*:*' fzf-preview '[[ -e $realpath ]] && eza --icons --color=always $realpath'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:directories' group-name directories
 zstyle ':completion:*' group-order directories files
