@@ -102,8 +102,13 @@ source $ZSH/oh-my-zsh.sh
 command -v npm &>/dev/null && eval "$(npm completion)"
 
 # fzf-tab config
-zstyle ':fzf-tab:*' fzf-flags --multi
+zstyle ':fzf-tab:*' fzf-flags --multi --ansi
 zstyle ':fzf-tab:*' fzf-bindings 'tab:toggle+down' 'shift-tab:toggle+up'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:complete:*:*' fzf-preview 'eza --icons --color=always $realpath 2>/dev/null || echo $realpath'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:directories' group-name directories
+zstyle ':completion:*' group-order directories files
 
 # User configuration
 
@@ -218,7 +223,8 @@ fi
 ESLINT_USE_FLAT_CONFIG=false
 
 # Add some Vim like keybindings to the terminal.
-bindkey '^y' autosuggest-accept
+bindkey '^y' autosuggest-accept   # Ctrl+Y
+bindkey '^[y' yank                # Alt+Y (emacs paste from kill ring)
 bindkey "^p" up-line-or-search
 bindkey "^n" down-line-or-search
 
