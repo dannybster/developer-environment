@@ -14,3 +14,4 @@ keybind = alt+left=unbind
 keybind = alt+right=unbind
 keybind = opt+3=text:#
 keybind = shift+enter=text:\n
+keybind = ctrl+semicolon=text::
