@@ -5,13 +5,14 @@ cursor-style = block
 font-family = Fira Code
 font-thicken = true
 font-size = 16.0
-theme = Dracula Pro.conf
+theme = light:Dracula Pro (Alucard).conf,dark:Dracula Pro.conf
 adjust-cell-height=20%
 
 # Get Meta (Alt) key to work on MacoOS
 macos-option-as-alt = true
-keybind = alt+left=unbind # Free alt+left for shell/editor word navigation
-keybind = alt+right=unbind # Free alt+right for shell/editor word navigation
-keybind = opt+3=text:# # UK keyboard: type hash symbol with opt+3
-keybind = shift+enter=text:\n # Insert literal newline without submitting
-keybind = ctrl+semicolon=text:: # Colon via palm-ctrl, faster than shift+;
+# Get Meta (Alt) key to work on MacOS
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+keybind = opt+3=text:#
+keybind = shift+enter=text:\n
+keybind = ctrl+semicolon=text::
