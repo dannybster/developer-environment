@@ -3,7 +3,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "dracula-pro",
+      colorscheme = "dracula-pro-lincoln",
     },
   },
 }

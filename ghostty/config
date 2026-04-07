@@ -5,7 +5,7 @@ cursor-style = block
 font-family = Fira Code
 font-thicken = true
 font-size = 16.0
-theme = light:Dracula Pro (Alucard).conf,dark:Dracula Pro.conf
+theme = Dracula Pro (Lincoln).conf
 adjust-cell-height=20%
 
 # Get Meta (Alt) key to work on MacoOS
