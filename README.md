@@ -18,6 +18,7 @@ Personal configuration files for macOS development environment.
 | `yazi/` | Yazi file manager |
 | `bat/` | Bat (better cat) |
 | `brew/` | Homebrew bundle |
+| `claude/` | Claude Code config (symlinked into `~/.claude`) |
 
 ## Neovim Setup
 
@@ -50,6 +51,9 @@ brew bundle --file=~/.config/brew/Brewfile
 # Open nvim and sync plugins
 nvim
 # Run :Lazy sync
+
+# Link Claude Code config into ~/.claude
+~/.config/claude/install.sh
 ```
 
 ### Syncing to existing machine
