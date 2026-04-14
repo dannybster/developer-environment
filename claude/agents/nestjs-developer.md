@@ -97,12 +97,20 @@ After implementation, always verify in this order (cheapest checks first):
 ```bash
 npm run lint        # Formatting and rule violations
 npm run build       # Compile (includes type checking)
-npm test            # Unit specs
-npm run test:e2e    # E2E specs
+npm test -- --no-watch           # Unit specs
+npm run test:e2e -- --no-watch   # E2E specs
 npm run test:ui     # UI specs (if the project has them)
 ```
 
+**Always pass `--no-watch` when running Jest.** Many projects configure watch mode in their test scripts for local development convenience. Without `--no-watch`, Jest will never exit and the process will hang.
+
 All checks must pass before the slice is considered complete. If any fail, fix the root cause — do not skip tests, cast types to `any`, or comment out assertions.
+
+After local verification passes, push to the feature branch and **wait for CI to pass before requesting review**. If CI fails, diagnose and fix — do not request review on a red build.
+
+## Scaffolding
+
+When a project has a setup or scaffold script (e.g. `scripts/setup.sh`), **always run it before making manual changes**. After running, validate that all references to the template name have been replaced — check CI workflows, config files, and package.json files. Do not manually rename files that the script is designed to handle.
 
 ## What You Do Not Do
 

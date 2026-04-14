@@ -16,6 +16,7 @@ TARGETS=(
   "settings.json"
   "statusline-command.sh"
   "agents"
+  "hooks"
 )
 
 for target in "${TARGETS[@]}"; do

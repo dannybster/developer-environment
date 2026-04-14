@@ -158,7 +158,7 @@ _fzf_compgen_dir() {
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
+export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview' --preview-window 'right,70%' --height=100% --bind 'shift-up:preview-up,shift-down:preview-down,shift-left:preview-page-up,shift-right:preview-page-down'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
 # Advanced customization of fzf options via _fzf_comprun function
@@ -182,6 +182,8 @@ alias cd="z"
 alias ls="eza --icons=always --group-directories-first"
 alias ll="eza -la --icons=always --git --group-directories-first"
 alias lt="eza --tree --icons=always -L 2"
+alias ff="fd --type f --hidden --exclude .git | fzf --preview 'bat -n --color=always --line-range :500 {}' --bind 'enter:become(echo {})' --bind 'ctrl-o:become(nvim {})' --bind 'ctrl-e:become(code {})'"
+alias fg="rg --color=always --line-number --hidden --glob '!.git' '' | fzf --ansi --delimiter : --preview 'bat -n --color=always --highlight-line {2} {1}' --bind 'enter:become(echo {1})' --bind 'ctrl-o:become(nvim {1} +{2})' --bind 'ctrl-e:become(code -g {1}:{2})'"
 
 # Load NVM
 export NVM_DIR="$HOME/.nvm"
