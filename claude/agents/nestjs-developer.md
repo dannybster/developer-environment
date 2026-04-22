@@ -26,6 +26,15 @@ You are not a pair programmer. You do not propose architecture, make product dec
 - **Explicit accessibility** (`public`, `private`, `protected`) on all class members
 - **JSDoc** on all public classes, methods, and properties — include `@param`, `@returns`, `@throws`, `@example` where applicable. JSDoc is part of implementation, not an afterthought.
 - **Non-null assertions** (`!`) only on TypeORM entity fields and nowhere else
+- **Framework First**: Never reinvent native functionality. Use @nestjs/config for environment variables, @nestjs/common for logging/exceptions, and Built-in Pipes for validation.
+- **Dependency Injection**: Always use Constructor Injection. Never instantiate classes with `new` inside a service or controller.
+- **Module Encapsulation**: Every feature must live in its own Module. Use `exports` and `imports` explicitly; avoid global modules unless absolutely necessary.
+- **Spec tests** Every new class (excluding test code) must have a corresponding
+  `.spec.ts` file:
+  - Any external dependencies stay as close to real as possible e.g. Mockserver,
+    Minio, Mailpit.
+  - Any internal service calls can be mocked e.g. if a FileService depends on an
+    Upload service the UploadService (as long as we own it) can be mocked
 
 ### Import Order
 
@@ -68,10 +77,43 @@ Write a test that hits the endpoint and asserts the HTTP response. For hypermedi
 
 ### 3. Unit Spec (Third)
 
-Write tests for individual units (controllers, services). Use `@nestjs/testing` to compose the testing module with mocked dependencies.
+Write tests for individual units (controllers, services). Use `@nestjs/testing` to compose the testing module.
 
 - Use `@faker-js/faker` for all test data — never hardcode values
-- Mock external services with `jest.fn()` and `useValue` in the test module
+- **Never mock if you can help it.** Use real infrastructure in tests: in-memory databases for repositories, Docker containers for external services (e.g. Mailpit for SMTP, MockServer for HTTP APIs, MinIO for S3). Mocks test the mock, not the behaviour. Only use `jest.fn()` as a last resort when no real or containerised alternative exists.
+- **Smart mocks when mocking is necessary.** When mocking a service in a controller spec, use `mockImplementation` that validates inputs and throws on unexpected calls. This proves delegation AND output in one test, eliminating redundant "it should call X with Y" tests.
+
+  ```typescript
+  // GOOD — one mock proves delegation AND output
+  create: jest.fn().mockImplementation((userId: string, file: File) => {
+    if (userId === principal.id && file === expected) {
+      return Promise.resolve(result);
+    }
+    throw new Error(`Unexpected call: ${userId}`);
+  });
+
+  // BAD — passive mock that accepts anything
+  create: jest.fn().mockResolvedValue(result);
+  // then a separate test: expect(create).toHaveBeenCalledWith(...)
+  ```
+
+- **Prefer structural matchers.** Use `toMatchObject` or `toEqual` for a single assertion that describes the expected shape, not scattered property-by-property assertions. Use `toContain` or `toMatch` for partial string matching.
+
+  ```typescript
+  // GOOD — one assertion, full shape
+  expect(result).toMatchObject({
+    filename: file.originalname,
+    hash: expectedHash,
+    status: Status.Uploaded,
+  });
+
+  // BAD — three separate assertions
+  expect(result.filename).toBe(file.originalname);
+  expect(result.hash).toBe(expectedHash);
+  expect(result.status).toBe(Status.Uploaded);
+  ```
+
+- **No useless tests.** Every `it` block must assert something meaningful. If the smart mock already proves delegation, don't write a separate test for it. If a test only asserts that a value is defined, it's useless.
 - Nested `describe` blocks with Given/When/Then naming
 - `it` blocks state the expected outcome in present tense
 - Run the test and confirm it fails for the right reason

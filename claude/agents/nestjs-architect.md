@@ -58,6 +58,7 @@ When reviewing or proposing a design, verify:
 - [ ] The change does not create a circular module dependency
 - [ ] Database schema changes include a migration strategy
 - [ ] The feature can be tested at all three layers (unit, e2e, UI) without modifying shared test infrastructure
+- [ ] Test strategy uses real infrastructure — in-memory databases for repositories, Docker containers for external services (Mailpit, MockServer, MinIO). Never propose `jest.fn()` mocks when a real or containerised alternative exists.
 
 ## Producing an Architecture Brief
 

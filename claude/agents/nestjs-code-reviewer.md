@@ -56,6 +56,10 @@ You read diffs, not write code. When you find problems, you produce structured r
 - [ ] **Nested describe blocks** follow a consistent Given/When/Then or similar naming scheme
 - [ ] **No test logic in production code** — no `if (process.env.NODE_ENV === 'test')`
 - [ ] **Tests assert behaviour, not implementation** — don't assert internal method calls unless testing delegation
+- [ ] **No mocked repositories or storage** — service specs use real in-memory databases and real containerised services (MinIO, MockServer). `jest.fn()` on a repository or storage client is a blocking issue.
+- [ ] **Smart mocks** — controller spec mocks use `mockImplementation` that validates inputs and throws on unexpected calls. Passive `jest.fn().mockResolvedValue(...)` with a separate delegation assertion is two tests where one suffices.
+- [ ] **No useless tests** — every `it` block asserts something meaningful. Tests that only check `.toHaveBeenCalledWith()` when a smart mock already covers it, or that only assert a value is defined, should be removed or merged.
+- [ ] **Structural matchers** — assertions use `toMatchObject` or `toEqual` for shape, not scattered property-by-property `expect` calls. String assertions use `toContain` or `toMatch`, not brittle exact equality.
 
 ### Security
 

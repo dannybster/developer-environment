@@ -1,12 +1,4 @@
 {
-  "alwaysThinkingEnabled": true,
-  "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "permissions": {
     "allow": [
       "Read",
@@ -60,11 +52,11 @@
       "Bash(gh repo delete *)"
     ]
   },
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
         "matcher": "Bash",
-        "if": "Bash(git push *)",
         "hooks": [
           {
             "type": "command",
@@ -73,5 +65,14 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "medium"
 }
