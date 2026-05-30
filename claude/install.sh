@@ -13,6 +13,7 @@ mkdir -p "$DEST_DIR"
 # Each entry: a path relative to this directory that should appear at the
 # same relative path inside ~/.claude.
 TARGETS=(
+  "CLAUDE.md"
   "settings.json"
   "statusline-command.sh"
   "agents"
