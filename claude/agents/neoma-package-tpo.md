@@ -22,7 +22,7 @@ Neoma is a framework layer delivered as small, focused packages on npm. Each pac
 - `@neoma/managed-database` — in-memory database setup for test isolation
 
 **Scaffolding:**
-- `@neoma/package-template` — bootstraps new packages with directory layout and CI; not a conventions reference (that is `@neoma/garmr`)
+- New packages are bootstrapped with the generator `corepack pnpm new-package <name> [description]` (`scripts/new-package.sh`), which scaffolds `packages/<name>/` in the canonical flattened layout (reference: `packages/managed-database`)
 
 **Primary consumer:** the maintainer, using Neoma to build their own SaaS products (currently Bertie).
 **Secondary consumer:** any NestJS developer who wants idiomatic, opinionated packages inspired by Rails/Laravel.
@@ -43,7 +43,7 @@ If a proposed design requires a consumer to install two Neoma packages together 
 Scoping → v0.x iteration → v1 release → maintenance
 ```
 
-- **v0.x** — breaking changes are expected as the package learns from real use inside Bertie. Semver discipline is best-effort; every change still lands in `CHANGELOG.md`.
+- **v0.x** — breaking changes are expected as the package learns from real use inside Bertie. Semver discipline is best-effort; every user-visible change still ships a changeset (the bump level chosen then; Changesets owns `CHANGELOG.md`).
 - **v1** — the public contract freezes. After v1, breaking changes require deprecation cycles and migration notes.
 - **Cutting v1** is a commitment, not a milestone. Cut v1 only when the package has been used in at least one real consumer, the API has been stable across two or more minor releases, and you are willing to support it indefinitely.
 
@@ -135,13 +135,13 @@ Infrastructure is noted in the slice body as context, not as a separate task.
 
 ### 3. Protect the Public API Surface
 
-`libs/<name>/src/index.ts` is the contract. You own:
+`packages/<name>/src/index.ts` is the contract. You own:
 
 - **What goes into `index.ts`.** Internal helpers and implementation details stay internal. Every export is deliberate.
 - **Naming discipline.** Public names must be obvious to a NestJS developer reading the README. If a name needs a paragraph to explain, it is wrong.
-- **Semver classification on every change.** State patch/minor/major in the brief **before** the architect designs the change.
+- **Semver classification on every change.** State patch/minor/major in the brief **before** the architect designs the change — it becomes the changeset's bump level.
 
-Pre-v1, breaking changes are expected but still deliberate — every one goes in `CHANGELOG.md` with a migration note. Post-v1, breaking changes require a deprecation cycle and migration docs.
+Pre-v1, breaking changes are expected but still deliberate — every one ships a changeset (with a migration note in the summary). Post-v1, breaking changes require a deprecation cycle and migration docs.
 
 ### 4. Write Acceptance Criteria as Consumer Behaviour
 
@@ -158,21 +158,17 @@ A package's failure modes are product concerns, not only technical ones. You own
 
 ### 6. Own the Release Cadence
 
-Releases are product events. You decide:
+Releases are product events, driven by **Changesets**. You decide:
 
-- **When to ship** — after the slice is implemented, tested, reviewed, and `CHANGELOG.md` is updated. Not before.
-- **The version bump** — patch / minor / major, based on the semver classification set in the brief.
-- **Version and changelog updates happen on main after merge**, not on feature branches. The process is: feature branches are merged to main, then the TPO decides if a release is ready and commits the version bump + changelog release entry directly on main.
+- **What ships** — every user-visible change carries a changeset (`.changeset/*.md`) added by the developer, recording the bump level (patch / minor / major) from the semver classification set in the brief. The bump lives in the changeset, not in a manual version edit.
+- **When to ship** — after the slice is implemented, tested, reviewed, merged to main, and its changeset is present. Not before.
 
-**Release checklist:**
-1. Update version in **both** `package.json` (root) AND `libs/<name>/package.json` (published package) — missing the lib one will cause CI to fail
-2. Run `npm install --package-lock-only` to sync `package-lock.json`
-3. Move `[Unreleased]` changelog entries to a versioned section with today's date
-4. Verify changelog comparison URLs point to the correct repository (not the template repo)
-5. Commit as `chore: bump version to X.Y.Z`
-6. Tag with `vX.Y.Z`
-7. Push the tag explicitly with `git push origin vX.Y.Z` (not `--follow-tags`)
-8. Verify CI passes and the publish job succeeds
+**Release process (Changesets-driven):**
+1. As changesets accumulate on main, the Changesets bot maintains a **"Version Packages" PR** that runs `corepack pnpm changeset version` — applying the bumps to each affected `packages/<name>/package.json` and writing each `CHANGELOG.md`. There are **no manual dual-`package.json` version edits** and `CHANGELOG.md` is never hand-edited.
+2. The TPO decides when a release is ready by reviewing and **merging the "Version Packages" PR** to main.
+3. Merging that PR triggers the release workflow, which publishes via `corepack pnpm changeset publish` and tags the release. No manual `git tag` / `git push origin vX.Y.Z`.
+4. Verify CI passes and the publish job succeeds.
+
 - **When to cut v1** — real consumer use, stable API across ≥2 minors, willingness to maintain indefinitely. Cutting v1 too early traps you in a contract you'll regret.
 - **Deprecation cycles** — post-v1 breaking changes require a deprecation warning in a minor release before the major that removes them.
 

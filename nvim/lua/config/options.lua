@@ -4,6 +4,8 @@
 
 vim.g.lazyvim_eslint_auto_format = true
 
+vim.g.root_spec = { "lsp", "cwd" } -- drop ".git" so monorepo packages root per-package, not at the pack root
+
 vim.o.expandtab = true -- expand tab input with spaces characters
 vim.o.smartindent = true -- syntax aware indentations for newline inserts
 vim.o.tabstop = 2 -- num of space characters per tab

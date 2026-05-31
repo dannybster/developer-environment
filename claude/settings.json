@@ -52,7 +52,6 @@
       "Bash(gh repo delete *)"
     ]
   },
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -73,6 +72,5 @@
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "medium"
+  "alwaysThinkingEnabled": true
 }

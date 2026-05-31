@@ -52,6 +52,7 @@ You read diffs, not write code. When you find problems, you produce structured r
 - [ ] **All three layers covered** where applicable: UI spec, E2E spec, unit spec
 - [ ] **Faker used for test data** — no hardcoded strings, emails, or values
 - [ ] **E2E tests use the project's harness** — not manual app creation
+- [ ] **Unit specs load the module, never `new` a provider** — providers, controllers, middleware, and guards are resolved from `Test.createTestingModule({ imports: [TheModule] })`, not constructed with `new`. A `new`-built spec can pass over a module that doesn't even assemble. Holds for zero-dependency classes too — registration + lifecycle is the wiring.
 - [ ] **Provider overrides** are in a separate `describe` block with their own setup
 - [ ] **Nested describe blocks** follow a consistent Given/When/Then or similar naming scheme
 - [ ] **No test logic in production code** — no `if (process.env.NODE_ENV === 'test')`
@@ -81,6 +82,7 @@ These patterns should block a merge unless the project overlay explicitly permit
 | `test.skip()` or `xit()` | Skipped tests rot — remove or fix |
 | `process.env.X` in a service | Use typed config injection |
 | Relative imports crossing top-level directories | Use path aliases |
+| `new SomeProvider()` in a spec | Bypasses DI wiring — resolve from a composed `TestingModule` |
 | Missing error handling on a mutating route | Unhandled errors show raw stack traces |
 | `console.log` | Use the injected logger |
 | Raw SQL without parameterisation | SQL injection risk |

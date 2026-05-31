@@ -77,10 +77,11 @@ Write a test that hits the endpoint and asserts the HTTP response. For hypermedi
 
 ### 3. Unit Spec (Third)
 
-Write tests for individual units (controllers, services). Use `@nestjs/testing` to compose the testing module.
+Write tests for individual units (controllers, services). **Load the entire module under test** — `Test.createTestingModule({ imports: [TheModule] })` — and resolve the unit from it with `moduleRef.get(...)`. **Never construct a provider with `new`.** The DI wiring is part of what's under test: a green suite must prove the module actually *assembles*, so a passing spec can never sit on top of a module that breaks when wired in a real app (e.g. an `OnApplicationBootstrap` hook a `forRoot()` forgot to register). `new`-ing a provider tests its logic in isolation and silently skips that proof — this holds even for a zero-dependency class, because registration and lifecycle participation **are** the wiring.
 
 - Use `@faker-js/faker` for all test data — never hardcode values
 - **Never mock if you can help it.** Use real infrastructure in tests: in-memory databases for repositories, Docker containers for external services (e.g. Mailpit for SMTP, MockServer for HTTP APIs, MinIO for S3). Mocks test the mock, not the behaviour. Only use `jest.fn()` as a last resort when no real or containerised alternative exists.
+- **Override genuine externals, don't hand-assemble.** With the whole module loaded, fake a true boundary with `.overrideProvider(X).useValue(...)` — never a hand-built `providers: [...]` list that skips the real wiring. When a condition can't be reproduced through DI (e.g. simulating an un-wired static like an ALS handle), a targeted `jest.spyOn` on that static is acceptable, since it isn't a provider you can override.
 - **Smart mocks when mocking is necessary.** When mocking a service in a controller spec, use `mockImplementation` that validates inputs and throws on unexpected calls. This proves delegation AND output in one test, eliminating redundant "it should call X with Y" tests.
 
   ```typescript
